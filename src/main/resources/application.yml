@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    user:
+      name: admin
+      password: 123
+      roles: admin
+

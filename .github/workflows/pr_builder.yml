@@ -1,0 +1,33 @@
+# TODO: Add yaml lint after test other steps.
+
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - "main"
+      - "develop"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout to branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.HEAD_REF }}
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Update local dependencies
+        run: ./gradlew --refresh-dependencies -iS
+      - name: Clean build
+        run: ./gradlew clean -iS
+      - name: Assemble
+        run: ./gradlew assemble -iS
+      - name: Check
+        run: ./gradlew check -x test -iS
+      - name: Test
+        run: ./gradlew test -x check -iS
