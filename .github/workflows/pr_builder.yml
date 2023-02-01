@@ -21,6 +21,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Update local dependencies
         run: ./gradlew --refresh-dependencies -iS
       - name: Clean build
